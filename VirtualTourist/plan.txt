@@ -1,12 +1,42 @@
 Story Point : Story Description
 (1) Drop Map Pin [DONE]
     Tapping and holding the map drops a new pin. Users can place any number of pins on the map.
-(3) Preserve map settings
+(3) Preserve map settings [DONE]
     The center of the map and the zoom level should be persistent.
   - create data struct to store
   - save it when app goes to background.
   - load from persistent data when app starts the first
-(3) Map to photo-album
+(3) Map to photo-album [DONE]
     When a pin is tapped, the app will navigate to the Photo Album view associated with the pin.
 
 End of Sprint : 29th Jan 2016
+
+BackLog:
+
+- replace segue with other navigation method.
+
+
+
+
+
+Lesson 1 Reference Sheet
+
+Here is a summary of the new code used in this lesson.
+
+Storing a value in NSUserDefaults
+
+NSUserDefaults.standardUserDefaults().defaults.setFloat(22.5 forKey: “myValue”)
+Retrieving a value from NSUserDefaults
+
+let value = NSUserDefaults.standardUserDefaults().floatForKey(“myValue”)
+Building the path for a file in the Documents directory
+
+let filename = "usersVoice.wav"
+let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+let pathArray = [dirPath, filename]
+let fileURL =  NSURL.fileURLWithPathComponents(pathArray)!
+Checking to see if a file exists
+
+if NSFileManager.defaultManager().fileExistsAtPath(audioFileURL().path!) {
+shouldSegueToSoundPlayer = true
+}

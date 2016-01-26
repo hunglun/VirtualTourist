@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA568C9C1C577BF300D70EFD /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA568C9B1C577BF300D70EFD /* PhotoAlbumViewController.swift */; };
 		FADEBDF81C565F5F00FBDBB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADEBDF71C565F5F00FBDBB4 /* AppDelegate.swift */; };
 		FADEBDFA1C565F5F00FBDBB4 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADEBDF91C565F5F00FBDBB4 /* MapViewController.swift */; };
 		FADEBDFD1C565F5F00FBDBB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FADEBDFB1C565F5F00FBDBB4 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA568C9B1C577BF300D70EFD /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
 		FADEBDF41C565F5E00FBDBB4 /* VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FADEBDF71C565F5F00FBDBB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FADEBDF91C565F5F00FBDBB4 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			children = (
 				FADEBDF71C565F5F00FBDBB4 /* AppDelegate.swift */,
 				FADEBDF91C565F5F00FBDBB4 /* MapViewController.swift */,
+				FA568C9B1C577BF300D70EFD /* PhotoAlbumViewController.swift */,
 				FADEBE0C1C5672B300FBDBB4 /* plan.txt */,
 				FADEBDFB1C565F5F00FBDBB4 /* Main.storyboard */,
 				FADEBE011C565F6000FBDBB4 /* Assets.xcassets */,
@@ -145,6 +148,7 @@
 				FADEBDFA1C565F5F00FBDBB4 /* MapViewController.swift in Sources */,
 				FADEBDF81C565F5F00FBDBB4 /* AppDelegate.swift in Sources */,
 				FADEBE001C565F6000FBDBB4 /* VirtualTourist.xcdatamodeld in Sources */,
+				FA568C9C1C577BF300D70EFD /* PhotoAlbumViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +298,7 @@
 				FADEBE0B1C565F6000FBDBB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
