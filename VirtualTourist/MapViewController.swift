@@ -11,7 +11,7 @@
 import UIKit
 import MapKit
 
-class  MapViewController: UIViewController,MKMapViewDelegate{
+class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizerDelegate{
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -26,31 +26,28 @@ class  MapViewController: UIViewController,MKMapViewDelegate{
 //        navigationItem.rightBarButtonItem  = UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: "edit")
 //        navigationItem.title = "On The Map"
     }
-    
-    func addTapHoldGesture() {
-        
-        
-        
-//        let longPressGesture = UILongPressGestureRecognizer.initWithTarget(
-            //[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
-/*        [self.mapView addGestureRecognizer:longPressGesture];
-        [longPressGesture release];
-        
-        mapAnnotations = [[NSMutableArray alloc] init];
-        MyLocation *location = [[MyLocation alloc] init];
-        [mapAnnotations addObject:location];
-        
-        [self gotoLocation];
-        [self.mapView addAnnotations:self.mapAnnotations];
-  */
+
+    func handleLongPressGesture(sender: UITapGestureRecognizer) {
+            let point = sender.locationInView(self.mapView) //locationInView:self.mapView
+            let coordinate = self.mapView.convertPoint(point, toCoordinateFromView: self.mapView)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            self.mapView.addAnnotation(annotation)
     }
+
+
+    func addTapHoldGesture() {
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPressGesture:")
+        longPressRecognizer.delegate = self
+        self.mapView.addGestureRecognizer(longPressRecognizer)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         populateNavigationBar()
         
         addTapHoldGesture()
-        
-    }
+     }
     
     override func viewWillAppear(animated: Bool) {
         

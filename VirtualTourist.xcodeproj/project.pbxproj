@@ -13,6 +13,7 @@
 		FADEBE001C565F6000FBDBB4 /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FADEBDFE1C565F6000FBDBB4 /* VirtualTourist.xcdatamodeld */; };
 		FADEBE021C565F6000FBDBB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FADEBE011C565F6000FBDBB4 /* Assets.xcassets */; };
 		FADEBE051C565F6000FBDBB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FADEBE031C565F6000FBDBB4 /* LaunchScreen.storyboard */; };
+		FADEBE0D1C5672B300FBDBB4 /* plan.txt in Resources */ = {isa = PBXBuildFile; fileRef = FADEBE0C1C5672B300FBDBB4 /* plan.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		FADEBE011C565F6000FBDBB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FADEBE041C565F6000FBDBB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FADEBE061C565F6000FBDBB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FADEBE0C1C5672B300FBDBB4 /* plan.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plan.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				FADEBDF71C565F5F00FBDBB4 /* AppDelegate.swift */,
 				FADEBDF91C565F5F00FBDBB4 /* MapViewController.swift */,
+				FADEBE0C1C5672B300FBDBB4 /* plan.txt */,
 				FADEBDFB1C565F5F00FBDBB4 /* Main.storyboard */,
 				FADEBE011C565F6000FBDBB4 /* Assets.xcassets */,
 				FADEBE031C565F6000FBDBB4 /* LaunchScreen.storyboard */,
@@ -126,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FADEBE051C565F6000FBDBB4 /* LaunchScreen.storyboard in Resources */,
+				FADEBE0D1C5672B300FBDBB4 /* plan.txt in Resources */,
 				FADEBE021C565F6000FBDBB4 /* Assets.xcassets in Resources */,
 				FADEBDFD1C565F5F00FBDBB4 /* Main.storyboard in Resources */,
 			);

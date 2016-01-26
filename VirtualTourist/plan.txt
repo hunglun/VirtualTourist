@@ -1,0 +1,12 @@
+Story Point : Story Description
+(1) Drop Map Pin [DONE]
+    Tapping and holding the map drops a new pin. Users can place any number of pins on the map.
+(3) Preserve map settings
+    The center of the map and the zoom level should be persistent.
+  - create data struct to store
+  - save it when app goes to background.
+  - load from persistent data when app starts the first
+(3) Map to photo-album
+    When a pin is tapped, the app will navigate to the Photo Album view associated with the pin.
+
+End of Sprint : 29th Jan 2016
