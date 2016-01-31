@@ -34,7 +34,7 @@ End of Sprint : 31th Jan 2016
 Sprint 4
 (2) bug fix : one long press trigger multiple pin creations. [DONE]
 (0.5) add segue identifier [DONE]
-(3) fetch Flickr photos related to the pin location into PhotoAlbumView
+(3) fetch Flickr photos related to the pin location into PhotoAlbumView [DONE]
 (3) persist the flickr photos for each pin
 
 End of Sprint : 7th Feb 2016

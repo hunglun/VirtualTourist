@@ -21,22 +21,34 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RW2-vM-0YL">
                                 <rect key="frame" x="0.0" y="64" width="595" height="536"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2of-3V-JAg">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="240" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoAlbumCollectionViewCell" id="bCy-2U-JLW">
-                                        <rect key="frame" x="0.0" y="64" width="50" height="50"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoAlbumCollectionViewCell" id="bCy-2U-JLW" customClass="PhotoAlbumCollectionViewCell" customModule="VirtualTourist" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="64" width="240" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bBH-vp-5Un">
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                </imageView>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <outlet property="imageView" destination="bBH-vp-5Un" id="2W8-eB-f0d"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="YUg-ef-aNN" id="ZW2-yx-F60"/>
+                                    <outlet property="delegate" destination="YUg-ef-aNN" id="NiA-96-xag"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -50,10 +62,13 @@
                     <navigationItem key="navigationItem" title="Photo Album" id="LGA-aB-CyR">
                         <barButtonItem key="backBarButtonItem" title="Back" id="3ws-lq-bjT"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="RW2-vM-0YL" id="ste-b0-BR6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rdP-Sh-XtG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="590" y="115"/>
+            <point key="canvasLocation" x="846" y="167"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dgV-dA-pTJ">

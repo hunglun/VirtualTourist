@@ -17,19 +17,40 @@ let EXTRAS = "url_m"
 let SAFE_SEARCH = "1"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
-let BOUNDING_BOX_HALF_WIDTH = 1.0
-let BOUNDING_BOX_HALF_HEIGHT = 1.0
+let BOUNDING_BOX_HALF_WIDTH = 0.01
+let BOUNDING_BOX_HALF_HEIGHT = 0.01
 let LAT_MIN = -90.0
 let LAT_MAX = 90.0
 let LON_MIN = -180.0
 let LON_MAX = 180.0
-class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate{
+class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UICollectionViewDataSource{
     var longitude : Double?
     var latitude : Double?
+    var photos = [UIImage]() //UIImage(data: imageData)
 
+    @IBOutlet var collectionView: UICollectionView!
+//    var collectionView : UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         populateNavigationBar()
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        if latitude == nil || longitude == nil    {
+            return
+        }
+        
+        let methodArguments = [
+            "method": METHOD_NAME,
+            "api_key": API_KEY,
+            "bbox": createBoundingBoxString(),
+            "safe_search": SAFE_SEARCH,
+            "extras": EXTRAS,
+            "format": DATA_FORMAT,
+            "nojsoncallback": NO_JSON_CALLBACK
+        ]
+        getImageFromFlickrBySearch(methodArguments)
+
     }
 
     func populateNavigationBar() {
@@ -171,19 +192,22 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate{
                 
 //                let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
 
-                for photoDictionary in  photosArray{
+                for photoDictionary in  photosArray[0..<10]{
                     if let photoTitle = photoDictionary["title"] as? String, /* non-fatal */
                            imageUrlString = photoDictionary["url_m"] as? String,
                            imageURL = NSURL(string: imageUrlString),
                            imageData = NSData(contentsOfURL: imageURL) {
-               
-                            dispatch_async(dispatch_get_main_queue(), {
                             
+                            dispatch_async(dispatch_get_main_queue(), {
+                                if let photo = UIImage(data: imageData) {
+                                    self.photos.append(photo)
+                                }
+                                print(photoTitle)
+                                print(imageUrlString)
+                                self.collectionView.reloadData()
                         //        self.photoImageView.image = UIImage(data: imageData)
                             
                             })
-                            print(photoTitle)
-                            print(imageUrlString)
                             
                     }
                 }
@@ -292,24 +316,32 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
-        if latitude == nil || longitude == nil    {
-            return
-        }
 
-        let methodArguments = [
-                    "method": METHOD_NAME,
-                    "api_key": API_KEY,
-                    "bbox": createBoundingBoxString(),
-                    "safe_search": SAFE_SEARCH,
-                    "extras": EXTRAS,
-                    "format": DATA_FORMAT,
-                    "nojsoncallback": NO_JSON_CALLBACK
-                ]
-        getImageFromFlickrBySearch(methodArguments)
+        
+        
     }
     
     func backToMapView(){
         navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    // MARKDOWN : UICollectionView
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print("select photo")
+        
+    }
+    
+    func collectionView(tableView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(photos.count)
+        return photos.count
+    }
+    
+    func collectionView(tableView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView?.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCollectionViewCell", forIndexPath: indexPath) as! PhotoAlbumCollectionViewCell
+        
+        cell.imageView?.image = photos[indexPath.row]
+        
+        return cell
     }
     
 }
