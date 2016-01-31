@@ -54,11 +54,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DTy-4T-8IS">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DTy-4T-8IS">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="600" id="1JK-hz-r4M"/>
-                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="gbz-DK-6KT"/>
                                 </connections>
@@ -66,10 +63,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="DTy-4T-8IS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Hut-bq-eg8"/>
-                            <constraint firstItem="DTy-4T-8IS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="KCM-ya-sag"/>
-                            <constraint firstItem="DTy-4T-8IS" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="m72-Xw-IJo"/>
-                            <constraint firstAttribute="trailing" secondItem="DTy-4T-8IS" secondAttribute="trailing" id="xfl-0r-BMm"/>
+                            <constraint firstItem="DTy-4T-8IS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ceb-9k-bCU"/>
+                            <constraint firstItem="DTy-4T-8IS" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="JP2-DH-igH"/>
+                            <constraint firstItem="DTy-4T-8IS" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" symbolic="YES" id="O4k-Iz-Mcl"/>
+                            <constraint firstAttribute="trailing" secondItem="DTy-4T-8IS" secondAttribute="trailing" id="v9T-TB-LW9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="uYG-4e-ESU"/>

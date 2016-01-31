@@ -1,19 +1,48 @@
+Sprint 1
 Story Point : Story Description
 (1) Drop Map Pin [DONE]
     Tapping and holding the map drops a new pin. Users can place any number of pins on the map.
 (3) Preserve map settings [DONE]
     The center of the map and the zoom level should be persistent.
-  - create data struct to store
-  - save it when app goes to background.
-  - load from persistent data when app starts the first
+    - create data struct to store
+    - save it when app goes to background.
+    - load from persistent data when app starts the first
 (3) Map to photo-album [DONE]
-    When a pin is tapped, the app will navigate to the Photo Album view associated with the pin.
+    When a pin is tapped, the app will navigate to the Photo Album view.
+
+End of Sprint : 29th Jan 2016 DONE on 26th Jan 2016
+
+
+Sprint 2
+(5) Complete iOS Persistence course [NOT DONE]
+2 hours, 2 hours, 3 hours,
+
+(1) Save and pin locations from Core Data [NOT DONE]
+
 
 End of Sprint : 29th Jan 2016
 
-BackLog:
 
-- replace segue with other navigation method.
+Sprint 3
+(3) Last Course in Core Data Course [DONE]
+    - 1 hour, 0.5 hour
+(3) Save and restore pin locations from Core Data[DONE]
+    - 2 hours
+
+End of Sprint : 31th Jan 2016
+
+Sprint 4
+(2) bug fix : one long press trigger multiple pin creations.
+(0.5) replace segue with other navigation method.
+(3) fetch Flickr photos related to the pin location into PhotoAlbumView
+(3) persist the flickr photos for each pin
+
+End of Sprint : 7th Feb 2016
+
+BackLog:
+(1) review rubrik
+
+
 
 
 

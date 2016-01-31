@@ -10,12 +10,12 @@
 
 import UIKit
 import MapKit
-
+import CoreData
 class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizerDelegate{
     
     @IBOutlet weak var mapView: MKMapView!
     
-    
+    var pins = [Pin]()
     
     func edit(){
         //TODO 0.5 : edit
@@ -36,7 +36,11 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
     func backToMapView(){
         navigationController?.popToRootViewControllerAnimated(true)
     }
-    
+
+    var sharedContext : NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }
+
     func handleLongPressGesture(sender: UITapGestureRecognizer) {
             let point = sender.locationInView(self.mapView) //locationInView:self.mapView
             let coordinate = self.mapView.convertPoint(point, toCoordinateFromView: self.mapView)
@@ -44,6 +48,9 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
             annotation.coordinate = coordinate
             annotation.title = "Hello"
             self.mapView.addAnnotation(annotation)
+            let _ = Pin(dictionary :[Pin.Keys.latitude : coordinate.latitude, Pin.Keys.Longitude : coordinate.longitude],context: sharedContext)
+            CoreDataStackManager.sharedInstance().saveContext()
+            print("in long press gesture")
     }
 
 
@@ -52,7 +59,19 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
         longPressRecognizer.delegate = self
         self.mapView.addGestureRecognizer(longPressRecognizer)
     }
-
+    
+    func fetchAllPins() -> [Pin]{
+        // Create the Fetch Request
+        let fetchRequest = NSFetchRequest(entityName: "Pin")
+        
+        // Execute the Fetch Request
+        do {
+            return try sharedContext.executeFetchRequest(fetchRequest) as! [Pin]
+        } catch _ {
+            return [Pin]()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         populateNavigationBar()
@@ -61,6 +80,15 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
         NSUserDefaults.standardUserDefaults().setFloat(22.5, forKey: "myValue")
         
         restoreMapRegion(false)
+        pins = fetchAllPins()
+        for pin in pins {
+            let annotation = MKPointAnnotation()
+            print(pin.longitude)
+            print(pin.latitude)
+            annotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
+            annotation.title = "Hello"
+            self.mapView.addAnnotation(annotation)
+        }
      }
     // MARK: - Save the zoom level helpers
     
@@ -115,45 +143,6 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
         
         
         super.viewWillAppear(animated)
-        self.mapView.removeAnnotations(self.mapView.annotations)
-        
-        // We will create an MKPointAnnotation for each student in "locations". The
-        // point annotations will be stored in this array, and then provided to the map view.
-        var annotations = [MKPointAnnotation]()
-        
-        // The "locations" array is loaded with the sample data below. We are using the dictionaries
-        // to create map annotations. This would be more stylish if the dictionaries were being
-        // used to create custom structs. Perhaps StudentLocation structs.
-
-        //self.mapView.centerCoordinate = coordinate
-        
-        /*
-        for student in locations ?? [] {
-            
-            // Notice that the float values are being used to create CLLocationDegree values.
-            // This is a version of the Double type.
-            let lat = CLLocationDegrees(student.latitude)
-            let long = CLLocationDegrees(student.longitude )
-            
-            // The lat and long are used to create a CLLocationCoordinates2D instance.
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            
-            let first = student.firstName
-            let last = student.lastName
-            let mediaURL = student.mediaURL
-            
-            // Here we create the annotation and set its coordiate, title, and subtitle properties
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = "\(first) \(last)"
-            annotation.subtitle = mediaURL
-            
-            // Finally we place the annotation in an array of annotations.
-            annotations.append(annotation)
-        }
-        */
-        // When the array is complete, we add the annotations to the map.
-        self.mapView.addAnnotations(annotations)
         
         
         
