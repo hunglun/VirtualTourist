@@ -28,9 +28,14 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
     }
 
     
-    func navigateToPhotoAlbumView(){
-        let nextController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")
-        navigationController?.pushViewController(nextController, animated: false)
+    func navigateToPhotoAlbumView(coordinate : CLLocationCoordinate2D?){
+        if let longitude = coordinate?.longitude,
+            latitude = coordinate?.latitude {
+                let nextController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController") as! PhotoAlbumViewController
+                nextController.longitude = longitude
+                nextController.latitude = latitude
+                navigationController?.pushViewController(nextController, animated: false)
+        }
     }
     
     func backToMapView(){
@@ -41,7 +46,9 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }
 
-    func handleLongPressGesture(sender: UITapGestureRecognizer) {
+    func handleLongPressGesture(sender: UILongPressGestureRecognizer) {
+        if sender.state == .Ended {
+
             let point = sender.locationInView(self.mapView) //locationInView:self.mapView
             let coordinate = self.mapView.convertPoint(point, toCoordinateFromView: self.mapView)
             let annotation = MKPointAnnotation()
@@ -51,6 +58,7 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
             let _ = Pin(dictionary :[Pin.Keys.latitude : coordinate.latitude, Pin.Keys.Longitude : coordinate.longitude],context: sharedContext)
             CoreDataStackManager.sharedInstance().saveContext()
             print("in long press gesture")
+        }
     }
 
 
@@ -174,7 +182,8 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
         if control == annotationView.rightCalloutAccessoryView {
 //            let app = UIApplication.sharedApplication()
   //          app.openURL(NSURL(string: annotationView.annotation!.subtitle!!)!)
-            navigateToPhotoAlbumView()
+
+            navigateToPhotoAlbumView(annotationView.annotation?.coordinate)
 /*            let photoAlbumViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")
             presentViewController(photoAlbumViewController, animated: true, completion: nil) */
         }
