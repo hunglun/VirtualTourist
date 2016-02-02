@@ -192,33 +192,74 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
                 
 //                let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
 
-                for photoDictionary in  photosArray[0..<10]{
-                    if let photoTitle = photoDictionary["title"] as? String, /* non-fatal */
-                           imageUrlString = photoDictionary["url_m"] as? String,
-                           imageURL = NSURL(string: imageUrlString),
-                           imageData = NSData(contentsOfURL: imageURL) {
-                            
-                            dispatch_async(dispatch_get_main_queue(), {
-                                if let photo = UIImage(data: imageData) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    for photoDictionary in  photosArray[0..<21]{
+                        if let photoTitle = photoDictionary["title"] as? String, /* non-fatal */
+                               imageUrlString = photoDictionary["url_m"] as? String,
+                               imageURL = NSURL(string: imageUrlString),
+                               id = photoDictionary["id"] as? String{
+
+                                var imageData : NSData?
+
+                                if let localURL = self.loadPhotoFromDisk(id) {
+                                    imageData = NSData(contentsOfURL: localURL)
+
+                                }else {
+                                    imageData = NSData(contentsOfURL: imageURL)
+                                    self.savePhotoToDisk(id ,data: imageData!)
+                                }
+
+                                if let photo = UIImage(data: imageData!) {
                                     self.photos.append(photo)
                                 }
+                                
+                                print(photoDictionary)
                                 print(photoTitle)
                                 print(imageUrlString)
-                                self.collectionView.reloadData()
-                        //        self.photoImageView.image = UIImage(data: imageData)
-                            
-                            })
-                            
+                        }
                     }
-                }
-                
+                    self.collectionView.reloadData()
+                })
                 
                 
             }
         }
         task.resume()
     }
+    func getPathForPhotoId(id:String) -> NSURL{
+        let filename = "\(id).jpg"
+        let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
+        let pathArray = [dirPath, filename]
+        let fileURL =  NSURL.fileURLWithPathComponents(pathArray)!
+        return fileURL
+    }
+
+    func saveImage (image: UIImage, path: String ) -> Bool{
+        
+//        let pngImageData = UIImagePNGRepresentation(image)
+        let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
+        let result = jpgImageData!.writeToFile(path, atomically: true)
+        
+        return result
+        
+    }
     
+    func savePhotoToDisk(id: String,data : NSData) {
+        let photoFileURL = getPathForPhotoId(id)
+        saveImage( UIImage(data: data)!,path: photoFileURL.path!)
+
+        //TODO: save imageData to photoFileURL
+    }
+
+    func loadPhotoFromDisk(id : String)-> NSURL?{
+        let photoFileURL = getPathForPhotoId(id)
+        if NSFileManager.defaultManager().fileExistsAtPath(photoFileURL.path!) {
+            return photoFileURL
+        }else{
+            return nil
+        }
+    }
+
     /* Function makes first request to get a random page, then it makes a request to get an image with the random page */
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject]) {
         

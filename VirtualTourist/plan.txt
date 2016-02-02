@@ -36,7 +36,8 @@ Sprint 4
 (0.5) add segue identifier [DONE]
 (3) fetch Flickr photos related to the pin location into PhotoAlbumView [DONE]
 (3) persist the flickr photos for each pin
-
+- 2hours : save image NSData to Document directory [DONE]
+-        : create a model and save imagePath in sqlite.
 End of Sprint : 7th Feb 2016
 
 BackLog:
