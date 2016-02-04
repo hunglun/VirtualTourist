@@ -8,6 +8,7 @@
 
 
 import UIKit
+import CoreData
 // MARK: - Globals
 
 let BASE_URL = "https://api.flickr.com/services/rest/"
@@ -27,7 +28,8 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     var longitude : Double?
     var latitude : Double?
     var photos = [UIImage]() //UIImage(data: imageData)
-
+    var _photos = [Photo]()
+    
     @IBOutlet var collectionView: UICollectionView!
 //    var collectionView : UICollectionView!
     override func viewDidLoad() {
@@ -35,6 +37,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         populateNavigationBar()
         collectionView.delegate = self
         collectionView.dataSource = self
+        
         
         if latitude == nil || longitude == nil    {
             return
@@ -49,10 +52,32 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK
         ]
-        getImageFromFlickrBySearch(methodArguments)
+        _photos = fetchAllPhotos()
+        for photo in _photos  {
+            if let image = photo.image {
+                photos.append(image)
+            }else{
+                print("image data is lost in disk.")
+            }
+        }
 
+        if photos.count ==  0 {
+            getImageFromFlickrBySearch(methodArguments)
+        }
     }
-
+    
+    func fetchAllPhotos() -> [Photo]{
+        // Create the Fetch Request
+        let fetchRequest = NSFetchRequest(entityName: "Photo")
+        
+        // Execute the Fetch Request
+        do {
+            return try sharedContext.executeFetchRequest(fetchRequest) as! [Photo]
+        } catch _ {
+            return [Photo]()
+        }
+    }
+    
     func populateNavigationBar() {
         
         navigationItem.leftBarButtonItem  = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: "backToMapView")
@@ -203,6 +228,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
 
                                 if let localURL = self.loadPhotoFromDisk(id) {
                                     imageData = NSData(contentsOfURL: localURL)
+                                    print("found \(localURL.path)")
 
                                 }else {
                                     imageData = NSData(contentsOfURL: imageURL)
@@ -212,6 +238,9 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
                                 if let photo = UIImage(data: imageData!) {
                                     self.photos.append(photo)
                                 }
+                                let _ = Photo(dictionary :[Photo.Keys.ImagePath : self.loadPhotoFromDisk(id)!.path!, Photo.Keys.ID : id],context: self.sharedContext)
+                                
+                                CoreDataStackManager.sharedInstance().saveContext()
                                 
                                 print(photoDictionary)
                                 print(photoTitle)
@@ -226,6 +255,11 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         }
         task.resume()
     }
+    
+    var sharedContext : NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }
+    
     func getPathForPhotoId(id:String) -> NSURL{
         let filename = "\(id).jpg"
         let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
@@ -347,6 +381,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
             /* Pick a random page! */
 //            let pageLimit = min(totalPages, 40)
 //            let randomPage = Int(arc4random_uniform(UInt32(pageLimit))) + 1
+            
             self.getImageFromFlickrBySearchWithPage(methodArguments, pageNumber: 1)
         }
         

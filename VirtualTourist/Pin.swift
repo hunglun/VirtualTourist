@@ -27,12 +27,12 @@ class Pin : NSManagedObject {
     struct Keys {
         static let latitude =  "latitude"
         static let Longitude = "longitude"
-        static let Movies = "photos"
+        static let Photos = "photos"
         static let ID = "id"
     }
     
     // 3. We are promoting these four from simple properties, to Core Data attributes
-
+    @NSManaged var photos: [Photo]
     @NSManaged var longitude: CLLocationDegrees
     @NSManaged var latitude: CLLocationDegrees
 

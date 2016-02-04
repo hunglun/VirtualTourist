@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FA12F2A81C5E1E5A0088DF7A /* PhotoAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12F2A71C5E1E5A0088DF7A /* PhotoAlbumCollectionViewCell.swift */; };
 		FA12F2AA1C60EA510088DF7A /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA12F2A91C60EA510088DF7A /* Photo.swift */; };
+		FA12F2AC1C6242250088DF7A /* programDescription.txt in Resources */ = {isa = PBXBuildFile; fileRef = FA12F2AB1C6242240088DF7A /* programDescription.txt */; };
 		FA568C9C1C577BF300D70EFD /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA568C9B1C577BF300D70EFD /* PhotoAlbumViewController.swift */; };
 		FA568CA81C5DABB900D70EFD /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA568CA71C5DABB900D70EFD /* Pin.swift */; };
 		FA568CAB1C5DADA600D70EFD /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA568CAA1C5DADA600D70EFD /* CoreDataStackManager.swift */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		FA12F2A71C5E1E5A0088DF7A /* PhotoAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		FA12F2A91C60EA510088DF7A /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		FA12F2AB1C6242240088DF7A /* programDescription.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = programDescription.txt; sourceTree = "<group>"; };
 		FA568C9B1C577BF300D70EFD /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
 		FA568CA71C5DABB900D70EFD /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Pin.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA568CAA1C5DADA600D70EFD /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				FA568C9B1C577BF300D70EFD /* PhotoAlbumViewController.swift */,
 				FA12F2A71C5E1E5A0088DF7A /* PhotoAlbumCollectionViewCell.swift */,
 				FADEBE0C1C5672B300FBDBB4 /* plan.txt */,
+				FA12F2AB1C6242240088DF7A /* programDescription.txt */,
 				FADEBDFB1C565F5F00FBDBB4 /* Main.storyboard */,
 				FADEBE011C565F6000FBDBB4 /* Assets.xcassets */,
 				FADEBE031C565F6000FBDBB4 /* LaunchScreen.storyboard */,
@@ -154,6 +157,7 @@
 				FADEBE051C565F6000FBDBB4 /* LaunchScreen.storyboard in Resources */,
 				FADEBE0D1C5672B300FBDBB4 /* plan.txt in Resources */,
 				FADEBE021C565F6000FBDBB4 /* Assets.xcassets in Resources */,
+				FA12F2AC1C6242250088DF7A /* programDescription.txt in Resources */,
 				FADEBDFD1C565F5F00FBDBB4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
