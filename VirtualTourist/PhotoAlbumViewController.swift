@@ -28,6 +28,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     var longitude : Double?
     var latitude : Double?
     var photos = [UIImage]() //UIImage(data: imageData)
+    var pin : Pin!
     var _photos = [Photo]()
     
     @IBOutlet var collectionView: UICollectionView!
@@ -52,8 +53,9 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK
         ]
-        _photos = fetchAllPhotos()
-        for photo in _photos  {
+
+
+        for photo in  pin?.photos ?? []{
             if let image = photo.image {
                 photos.append(image)
             }else{
@@ -237,9 +239,10 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
 
                                 if let photo = UIImage(data: imageData!) {
                                     self.photos.append(photo)
-                                }
-                                let _ = Photo(dictionary :[Photo.Keys.ImagePath : self.loadPhotoFromDisk(id)!.path!, Photo.Keys.ID : id],context: self.sharedContext)
-                                
+                                } 
+                                let _photo = Photo(dictionary :[Photo.Keys.ImagePath : self.loadPhotoFromDisk(id)!.path!, Photo.Keys.ID : id],context: self.sharedContext)
+                                _photo.pin = self.pin
+//                                self.pin.photos.append(_photo)
                                 CoreDataStackManager.sharedInstance().saveContext()
                                 
                                 print(photoDictionary)

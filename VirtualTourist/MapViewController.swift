@@ -34,6 +34,11 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
                 let nextController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController") as! PhotoAlbumViewController
                 nextController.longitude = longitude
                 nextController.latitude = latitude
+                for pin in pins {
+                    if (pin.latitude == latitude && pin.longitude == longitude){
+                        nextController.pin = pin
+                    }
+                }
                 navigationController?.pushViewController(nextController, animated: false)
         }
     }

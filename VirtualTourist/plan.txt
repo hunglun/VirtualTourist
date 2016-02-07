@@ -41,7 +41,7 @@ Sprint 4
 End of Sprint : 7th Feb 2016
 
 Sprint 5
-(3) Figure out how to associate Photo with Pin.
+(3) Figure out how to associate Photo with Pin. [DONE]
 (1) Prepare for Sprint 6 by going through the Rubrik again.
 
 BackLog:
