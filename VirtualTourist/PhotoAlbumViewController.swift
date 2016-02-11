@@ -29,10 +29,10 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     var latitude : Double?
     var photos = [UIImage]() //UIImage(data: imageData)
     var pin : Pin!
-    var _photos = [Photo]()
+
     
     @IBOutlet var collectionView: UICollectionView!
-//    var collectionView : UICollectionView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         populateNavigationBar()
@@ -55,31 +55,13 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         ]
 
 
-        for photo in  pin?.photos ?? []{
-            if let image = photo.image {
-                photos.append(image)
-            }else{
-                print("image data is lost in disk.")
-            }
-        }
 
-        if photos.count ==  0 {
+        print("Photos : \(pin?.photos.count)")
+        if pin?.photos.count ==  nil || pin?.photos.count==0{
             getImageFromFlickrBySearch(methodArguments)
         }
     }
-    
-    func fetchAllPhotos() -> [Photo]{
-        // Create the Fetch Request
-        let fetchRequest = NSFetchRequest(entityName: "Photo")
-        
-        // Execute the Fetch Request
-        do {
-            return try sharedContext.executeFetchRequest(fetchRequest) as! [Photo]
-        } catch _ {
-            return [Photo]()
-        }
-    }
-    
+
     func populateNavigationBar() {
         
         navigationItem.leftBarButtonItem  = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: "backToMapView")
@@ -220,7 +202,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
 //                let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
 
                 dispatch_async(dispatch_get_main_queue(), {
-                    for photoDictionary in  photosArray[0..<21]{
+                    for photoDictionary in  photosArray[0..<min(photosArray.count,21)]{
                         if let photoTitle = photoDictionary["title"] as? String, /* non-fatal */
                                imageUrlString = photoDictionary["url_m"] as? String,
                                imageURL = NSURL(string: imageUrlString),
@@ -237,19 +219,21 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
                                     self.savePhotoToDisk(id ,data: imageData!)
                                 }
 
-                                if let photo = UIImage(data: imageData!) {
-                                    self.photos.append(photo)
-                                } 
-                                let _photo = Photo(dictionary :[Photo.Keys.ImagePath : self.loadPhotoFromDisk(id)!.path!, Photo.Keys.ID : id],context: self.sharedContext)
-                                _photo.pin = self.pin
-//                                self.pin.photos.append(_photo)
-                                CoreDataStackManager.sharedInstance().saveContext()
+                                let photo = Photo(dictionary :[Photo.Keys.ImagePath : self.loadPhotoFromDisk(id)!.path!, Photo.Keys.ID : id],context: self.sharedContext)
+                                photo.pin = self.pin
                                 
-                                print(photoDictionary)
+                                
+                                
                                 print(photoTitle)
-                                print(imageUrlString)
+                                CoreDataStackManager.sharedInstance().saveContext()
+                                print(self.pin?.photos.count)
+                                print(photo.pin?.photos.count)
+                                
+                                
                         }
                     }
+                    CoreDataStackManager.sharedInstance().saveContext()
+                    print(self.pin?.photos.count)
                     self.collectionView.reloadData()
                 })
                 
@@ -394,10 +378,6 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
-
-        
-        
     }
     
     func backToMapView(){
@@ -411,14 +391,17 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     }
     
     func collectionView(tableView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(photos.count)
-        return photos.count
+        print(pin?.photos.count)
+        if pin?.photos ==  nil {
+            return 0
+        }
+        return pin!.photos.count
     }
     
     func collectionView(tableView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView?.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCollectionViewCell", forIndexPath: indexPath) as! PhotoAlbumCollectionViewCell
         
-        cell.imageView?.image = photos[indexPath.row]
+        cell.imageView?.image = self.pin.photos[indexPath.row].image
         
         return cell
     }

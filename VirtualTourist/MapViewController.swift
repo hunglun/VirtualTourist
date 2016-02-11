@@ -14,7 +14,7 @@ import CoreData
 class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizerDelegate{
     
     @IBOutlet weak var mapView: MKMapView!
-    
+    var selectedPin : Pin?
     var pins = [Pin]()
     
     func edit(){
@@ -27,22 +27,21 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
 //        navigationItem.title = "On The Map"
     }
 
-    
-    func navigateToPhotoAlbumView(coordinate : CLLocationCoordinate2D?){
-        if let longitude = coordinate?.longitude,
-            latitude = coordinate?.latitude {
-                let nextController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController") as! PhotoAlbumViewController
-                nextController.longitude = longitude
-                nextController.latitude = latitude
-                for pin in pins {
-                    if (pin.latitude == latitude && pin.longitude == longitude){
-                        nextController.pin = pin
-                    }
-                }
-                navigationController?.pushViewController(nextController, animated: false)
+ 
+    func navigateToPhotoAlbumView(pinID : String){
+        let nextController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController") as! PhotoAlbumViewController
+        for pin in pins {
+            print("Pin ID: \(pin.id)")
+            if (pinID == "\(pin.id)") {
+                nextController.pin = pin
+                nextController.latitude = pin.latitude
+                nextController.longitude = pin.longitude
+                
+            }
         }
+        navigationController?.pushViewController(nextController, animated: false)
     }
-    
+   
     func backToMapView(){
         navigationController?.popToRootViewControllerAnimated(true)
     }
@@ -58,9 +57,12 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
             let coordinate = self.mapView.convertPoint(point, toCoordinateFromView: self.mapView)
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
-            annotation.title = "Hello"
+
+
             self.mapView.addAnnotation(annotation)
-            let _ = Pin(dictionary :[Pin.Keys.latitude : coordinate.latitude, Pin.Keys.Longitude : coordinate.longitude],context: sharedContext)
+            let pin = Pin(dictionary :[Pin.Keys.latitude : coordinate.latitude, Pin.Keys.Longitude : coordinate.longitude],context: sharedContext)
+            annotation.title = "\(pin.id)"
+            pins.append(pin)
             CoreDataStackManager.sharedInstance().saveContext()
             print("in long press gesture")
         }
@@ -91,7 +93,8 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
         addTapHoldGesture()
         print(NSUserDefaults.standardUserDefaults().floatForKey("myValue"))
         NSUserDefaults.standardUserDefaults().setFloat(22.5, forKey: "myValue")
-        
+    
+
         restoreMapRegion(false)
         pins = fetchAllPins()
         for pin in pins {
@@ -99,7 +102,9 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
             print(pin.longitude)
             print(pin.latitude)
             annotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
-            annotation.title = "Hello"
+            annotation.title = "\(pin.id)"
+
+            
             self.mapView.addAnnotation(annotation)
         }
      }
@@ -166,29 +171,40 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
         let reuseId = "pin"
         
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-        
+
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
             pinView!.pinTintColor = UIColor.redColor()
             pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         }
         else {
             pinView!.annotation = annotation
         }
+        pinView!.canShowCallout = false
         
         return pinView
 
     }
- 
+
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+           navigateToPhotoAlbumView(((view.annotation?.title)!)!);
+        print(view.annotation!.title)
+
+    }
+    
+    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
+
+        print("\(view.annotation!.title) deselect")
+    }
+
     
     func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
+
         if control == annotationView.rightCalloutAccessoryView {
 //            let app = UIApplication.sharedApplication()
   //          app.openURL(NSURL(string: annotationView.annotation!.subtitle!!)!)
 
-            navigateToPhotoAlbumView(annotationView.annotation?.coordinate)
+            navigateToPhotoAlbumView(((annotationView.annotation?.title)!)!);
 /*            let photoAlbumViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")
             presentViewController(photoAlbumViewController, animated: true, completion: nil) */
         }
@@ -198,6 +214,7 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
         saveMapRegion()
     }
 
+ 
     
 }
 

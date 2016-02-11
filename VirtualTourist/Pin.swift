@@ -23,7 +23,7 @@ import MapKit
 
 // 2. Make Person a subclass of NSManagedObject
 class Pin : NSManagedObject {
-    
+    static var count = 0
     struct Keys {
         static let latitude =  "latitude"
         static let Longitude = "longitude"
@@ -35,6 +35,7 @@ class Pin : NSManagedObject {
     @NSManaged var photos: [Photo]
     @NSManaged var longitude: CLLocationDegrees
     @NSManaged var latitude: CLLocationDegrees
+    @NSManaged var id: NSNumber
 
 //    @NSManaged var id: NSNumber
 //    @NSManaged var movies: [Movie]
@@ -48,7 +49,8 @@ class Pin : NSManagedObject {
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         longitude = dictionary[Keys.Longitude] as! CLLocationDegrees
         latitude = dictionary[Keys.latitude] as! CLLocationDegrees
-//        id = dictionary[Keys.ID] as! Int
+        Pin.count = Pin.count + 1
+        id = Pin.count
 
     }
     

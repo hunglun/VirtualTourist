@@ -1,0 +1,11 @@
+3rd Feb 2016
+Now:
+Whenever pin is tapped, the App searches in Flickr for photos. If the photos have been downloaded before, they will be fetched from the disk instead.
+
+We want:
+When a pin is tapped, its associated photo list is checked. If the photo list is empty, the current implementation is used.
+If the photo list is not empty, populate the collection view with the photos.
+
+Implementation:
+1. saves photos to Photo entity [DONE]
+2. try to fetch them before download.[DONE]

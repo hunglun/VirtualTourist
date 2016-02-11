@@ -34,12 +34,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="595" height="297"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bBH-vp-5Un">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bBH-vp-5Un">
                                                     <rect key="frame" x="0.0" y="0.0" width="595" height="297"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="bBH-vp-5Un" secondAttribute="trailing" id="3Ab-Ic-1be"/>
+                                            <constraint firstItem="bBH-vp-5Un" firstAttribute="leading" secondItem="bCy-2U-JLW" secondAttribute="leading" id="7bF-oq-Bf8"/>
+                                            <constraint firstAttribute="bottom" secondItem="bBH-vp-5Un" secondAttribute="bottom" id="I9c-7O-wC1"/>
+                                            <constraint firstItem="bBH-vp-5Un" firstAttribute="top" secondItem="bCy-2U-JLW" secondAttribute="top" id="SMk-Bo-97o"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="bBH-vp-5Un" id="2W8-eB-f0d"/>
                                         </connections>
