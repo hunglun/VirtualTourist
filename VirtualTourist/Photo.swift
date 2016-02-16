@@ -40,7 +40,23 @@ class Photo : NSManagedObject {
         id = dictionary[Keys.ID] as! String
         
     }
+    func saveImage (image: UIImage, path: String ) -> Bool{
+        
+        //        let pngImageData = UIImagePNGRepresentation(image)
+        let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
+        let result = jpgImageData!.writeToFile(path, atomically: true)
+        
+        return result
+        
+    }
     
+    func savePhotoToDisk(id: String,data : NSData) {
+        let photoFileURL = getPathForPhotoId(id)
+        saveImage( UIImage(data: data)!,path: photoFileURL.path!)
+        
+
+    }
+
     func getPathForPhotoId(id:String) -> NSURL{
         let filename = "\(id).jpg"
         let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -59,8 +75,23 @@ class Photo : NSManagedObject {
     }
     var image: UIImage? {
         get {
+            var imageData : NSData?
+            if let localURL = self.loadPhotoFromDisk(id) {
+                imageData = NSData(contentsOfURL: localURL)
+                print("found \(localURL.path)")
+                
+            }else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    //                    self.setUIEnabled(enabled: true)
+                    imageData = NSData(contentsOfURL: NSURL(string: self.imagePath)!)
+                    self.savePhotoToDisk(self.id ,data: imageData!)
+                    // call collectionView.reloadData()
+                })
+            }
+            
+
             //        return TheMovieDB.Caches.imageCache.imageWithIdentifier(imagePath)
-            if let data = NSData(contentsOfURL:  loadPhotoFromDisk(id)!){
+            if let data = NSData(contentsOfURL:  getPathForPhotoId(id)){
                 return UIImage(data: data)
             }
             print("can't find file \(imagePath)")
@@ -70,6 +101,34 @@ class Photo : NSManagedObject {
         set {
             //      TheMovieDB.Caches.imageCache.storeImage(image, withIdentifier: imagePath!)
         }
+    }
+    
+    func getImage(collectionView : UICollectionView)-> UIImage? {
+        var imageData : NSData?
+        //TODO: use Memory cache to speed up photo lookup
+        // reference ImageCache.swift 
+        if let localURL = self.loadPhotoFromDisk(id) {
+            imageData = NSData(contentsOfURL: localURL)
+            print("Found \(localURL.path)")
+            
+        }else {
+            dispatch_async(dispatch_get_main_queue(), {
+                //                    self.setUIEnabled(enabled: true)
+                imageData = NSData(contentsOfURL: NSURL(string: self.imagePath)!)
+                self.savePhotoToDisk(self.id ,data: imageData!)
+                print("Downloaded \(self.imagePath)")
+                collectionView.reloadData()
+            })
+        }
+        
+        
+        //        return TheMovieDB.Caches.imageCache.imageWithIdentifier(imagePath)
+        if let data = NSData(contentsOfURL:  getPathForPhotoId(id)){
+            return UIImage(data: data)
+           
+        }
+        print("Pending \(imagePath)")
+        return nil
     }
 }
 

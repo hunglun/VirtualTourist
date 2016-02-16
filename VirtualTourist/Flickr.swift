@@ -165,14 +165,18 @@ class Flickr : NSObject {
                 }
                 
                 //                let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
+      
+                for photoDictionary in  photosArray[0..<min(photosArray.count,21)]{
+                    completionHandler(result: photoDictionary,error: nil)
+                }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+               /* dispatch_async(dispatch_get_main_queue(), {
                     for photoDictionary in  photosArray[0..<min(photosArray.count,21)]{
                         completionHandler(result: photoDictionary,error: nil)
                     }
                     
                 })
-                
+                */
                 
             }
         }

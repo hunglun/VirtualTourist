@@ -19,34 +19,40 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RW2-vM-0YL">
-                                <rect key="frame" x="0.0" y="64" width="595" height="536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2of-3V-JAg">
-                                    <size key="itemSize" width="595" height="297"/>
+                                    <size key="itemSize" width="293" height="208"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoAlbumCollectionViewCell" id="bCy-2U-JLW" customClass="PhotoAlbumCollectionViewCell" customModule="VirtualTourist" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="595" height="297"/>
+                                        <rect key="frame" x="0.0" y="64" width="293" height="208"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="595" height="297"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="293" height="208"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bBH-vp-5Un">
-                                                    <rect key="frame" x="0.0" y="0.0" width="595" height="297"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="bBH-vp-5Un">
+                                                    <rect key="frame" x="0.0" y="0.0" width="295" height="208"/>
                                                 </imageView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="qZl-ix-VJl">
+                                                    <rect key="frame" x="136" y="94" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="bBH-vp-5Un" secondAttribute="trailing" id="3Ab-Ic-1be"/>
-                                            <constraint firstItem="bBH-vp-5Un" firstAttribute="leading" secondItem="bCy-2U-JLW" secondAttribute="leading" id="7bF-oq-Bf8"/>
-                                            <constraint firstAttribute="bottom" secondItem="bBH-vp-5Un" secondAttribute="bottom" id="I9c-7O-wC1"/>
-                                            <constraint firstItem="bBH-vp-5Un" firstAttribute="top" secondItem="bCy-2U-JLW" secondAttribute="top" id="SMk-Bo-97o"/>
+                                            <constraint firstItem="bBH-vp-5Un" firstAttribute="top" secondItem="bCy-2U-JLW" secondAttribute="top" id="Lki-Ps-TaJ"/>
+                                            <constraint firstAttribute="bottom" secondItem="bBH-vp-5Un" secondAttribute="bottom" id="aCI-g7-QsK"/>
+                                            <constraint firstItem="qZl-ix-VJl" firstAttribute="centerY" secondItem="bBH-vp-5Un" secondAttribute="centerY" id="bDQ-mf-1Pr"/>
+                                            <constraint firstItem="bBH-vp-5Un" firstAttribute="leading" secondItem="bCy-2U-JLW" secondAttribute="leading" id="hHl-Lv-aE2"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="bBH-vp-5Un" secondAttribute="trailing" constant="-10" id="vUG-wk-iuG"/>
+                                            <constraint firstItem="qZl-ix-VJl" firstAttribute="centerX" secondItem="bCy-2U-JLW" secondAttribute="centerX" id="wXk-jp-sOX"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="activityIndicator" destination="qZl-ix-VJl" id="mff-Gi-b5t"/>
                                             <outlet property="imageView" destination="bBH-vp-5Un" id="2W8-eB-f0d"/>
                                         </connections>
                                     </collectionViewCell>
@@ -59,10 +65,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="top" secondItem="mk4-vf-5sg" secondAttribute="bottom" id="Lad-Ri-40S"/>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="9o1-rH-cLa" secondAttribute="leading" id="W0F-pv-UMr"/>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="bottom" secondItem="9if-R1-31B" secondAttribute="top" id="WSN-tu-YK8"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="RW2-vM-0YL" secondAttribute="trailing" constant="-15" id="ZHD-UI-FwO"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="top" secondItem="9o1-rH-cLa" secondAttribute="top" id="cPl-Nw-u0i"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="9o1-rH-cLa" secondAttribute="leading" id="e2L-Xq-cpc"/>
+                            <constraint firstAttribute="trailing" secondItem="RW2-vM-0YL" secondAttribute="trailing" id="tWY-oS-VCd"/>
+                            <constraint firstItem="9if-R1-31B" firstAttribute="top" secondItem="RW2-vM-0YL" secondAttribute="bottom" constant="64" id="uVQ-MP-bUM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Photo Album" id="LGA-aB-CyR">
@@ -130,4 +136,7 @@
             <point key="canvasLocation" x="104" y="221"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="photoPlaceholder" width="116" height="171"/>
+    </resources>
 </document>

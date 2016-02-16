@@ -66,29 +66,36 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     
        // download completion handler
     func downloadCompletionHander (result: AnyObject!, error: NSError?) -> Void {
+        
         if let photoTitle = result["title"] as? String, /* non-fatal */
             imageUrlString = result["url_m"] as? String,
-            imageURL = NSURL(string: imageUrlString),
             id = result["id"] as? String{
+                /*
                 
                 var imageData : NSData?
-                
+                //TODO: create image path here.
+                // load the image in CollectionView later.
                 if let localURL = self.loadPhotoFromDisk(id) {
                     imageData = NSData(contentsOfURL: localURL)
                     print("found \(localURL.path)")
                     
                 }else {
+                    
                     imageData = NSData(contentsOfURL: imageURL)
                     self.savePhotoToDisk(id ,data: imageData!)
                 }
+                */
                 
-                let photo = Photo(dictionary :[Photo.Keys.ImagePath : self.loadPhotoFromDisk(id)!.path!, Photo.Keys.ID : id],context: self.sharedContext)
+                let photo = Photo(dictionary :[Photo.Keys.ImagePath : imageUrlString, Photo.Keys.ID : id],context: self.sharedContext)
                 photo.pin = self.pin
                 print(photoTitle)
                 CoreDataStackManager.sharedInstance().saveContext()
-                print(self.pin?.photos.count)
                 print(photo.pin?.photos.count)
-                self.collectionView.reloadData()
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.collectionView.reloadData()
+                })
+                
         }
     }
 
@@ -124,6 +131,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
 
     func loadPhotoFromDisk(id : String)-> NSURL?{
         let photoFileURL = getPathForPhotoId(id)
+        
         if NSFileManager.defaultManager().fileExistsAtPath(photoFileURL.path!) {
             return photoFileURL
         }else{
@@ -157,8 +165,12 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     func collectionView(tableView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView?.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCollectionViewCell", forIndexPath: indexPath) as! PhotoAlbumCollectionViewCell
         
-        cell.imageView?.image = self.pin.photos[indexPath.row].image
-        
+        if let image = self.pin.photos[indexPath.row].getImage(collectionView) {
+            cell.imageView?.image = image
+            cell.activityIndicator?.hidden = true
+        }else{
+            cell.activityIndicator?.hidden = false
+        }
         return cell
     }
     
