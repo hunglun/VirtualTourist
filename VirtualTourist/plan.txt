@@ -41,8 +41,38 @@ Sprint 4
 End of Sprint : 7th Feb 2016
 
 Sprint 5
-(3) Figure out how to associate Photo with Pin.
+(3) Figure out how to associate Photo with Pin. [DONE]
 (1) Prepare for Sprint 6 by going through the Rubrik again.
+End of Sprint: 12th Feb 2016
+
+Sprint 6 [NOT DONE]
+[1] The code for downloading photos is in its own class, separate from the PhotoAlbumViewController.
+[3] Images display as they are downloaded. They are shown with placeholders in a collection view while they download, and displayed as soon as possible.
+[3] Once all images have been downloaded, the user can remove photos from the album by tapping the image in the collection view. Tapping the image removes it from the photo album, the booth in the collection view, and Core Data.
+[3] When a photo is removed from an album, or when an entire album is deleted, the PhotoAlbumViewController explicitly deletes the underlying file(s) in the Documents directory.
+[5] The Photo Album view has a button that initiates the download of a new album, replacing the images in the photo album with a new set from  Flickr.
+
+Estimate work hour : 15 hours!
+12th Feb : 1 hour
+Saturday : 7 hours : 7am - 11am, 3pm - 6pm
+Sunday   : 7 hours : 7am - 11am, 3pm - 6pm
+
+Retrospective:
+I spent the weekend polishing my LinkedIn Profile instead.
+End of Sprint : 14th Feb 2016 Midnight
+
+Sprint 7
+[1] The code for downloading photos is in its own class, separate from the PhotoAlbumViewController. [DONE]
+[2] Images display as they are downloaded. They are shown with placeholders in a collection view while they download, and displayed as soon as possible.
+[3] Once all images have been downloaded, the user can remove photos from the album by tapping the image in the collection view. Tapping the image removes it from the photo album, the booth in the collection view, and Core Data.
+[2] When a photo is removed from an album, or when an entire album is deleted, the PhotoAlbumViewController explicitly deletes the underlying file(s) in the Documents directory.
+[3] The Photo Album view has a button that initiates the download of a new album, replacing the images in the photo album with a new set from  Flickr.
+
+[1] - move networking code to Flickr.swift
+    - TODO call networking function with a completion handler, yet to be defined.
+    - remove networking code from PhotoAlbumViewController.swift
+21th Feb 2016 Midnight
+
 
 BackLog:
 (1) review rubrik
