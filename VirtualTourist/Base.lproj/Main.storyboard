@@ -18,6 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rVa-cn-Xrs">
+                                <rect key="frame" x="0.0" y="544" width="594" height="56"/>
+                                <state key="normal" title="New Photo Collection"/>
+                                <connections>
+                                    <action selector="pressBottomButton:" destination="YUg-ef-aNN" eventType="touchUpInside" id="EN4-mh-CvR"/>
+                                </connections>
+                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RW2-vM-0YL">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2of-3V-JAg">
@@ -28,7 +35,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoAlbumCollectionViewCell" id="bCy-2U-JLW" customClass="PhotoAlbumCollectionViewCell" customModule="VirtualTourist" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="293" height="208"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="293" height="208"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="293" height="208"/>
@@ -65,7 +72,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="rVa-cn-Xrs" firstAttribute="top" secondItem="RW2-vM-0YL" secondAttribute="bottom" constant="8" symbolic="YES" id="Dg4-Vd-x3W"/>
+                            <constraint firstItem="rVa-cn-Xrs" firstAttribute="leading" secondItem="RW2-vM-0YL" secondAttribute="leading" id="SE6-7F-K4b"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rVa-cn-Xrs" secondAttribute="trailing" constant="-14" id="btX-8N-WKS"/>
                             <constraint firstItem="RW2-vM-0YL" firstAttribute="top" secondItem="9o1-rH-cLa" secondAttribute="top" id="cPl-Nw-u0i"/>
+                            <constraint firstItem="rVa-cn-Xrs" firstAttribute="bottom" secondItem="9if-R1-31B" secondAttribute="top" id="dAn-xq-c5X"/>
                             <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="9o1-rH-cLa" secondAttribute="leading" id="e2L-Xq-cpc"/>
                             <constraint firstAttribute="trailing" secondItem="RW2-vM-0YL" secondAttribute="trailing" id="tWY-oS-VCd"/>
                             <constraint firstItem="9if-R1-31B" firstAttribute="top" secondItem="RW2-vM-0YL" secondAttribute="bottom" constant="64" id="uVQ-MP-bUM"/>
@@ -75,6 +86,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="3ws-lq-bjT"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="bottomButton" destination="rVa-cn-Xrs" id="VEM-Ex-y4b"/>
                         <outlet property="collectionView" destination="RW2-vM-0YL" id="ste-b0-BR6"/>
                     </connections>
                 </viewController>

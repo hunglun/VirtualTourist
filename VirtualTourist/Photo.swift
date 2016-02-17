@@ -22,6 +22,7 @@ class Photo : NSManagedObject {
     struct Keys {
         static let ImagePath =  "imagePath"
         static let ID = "id"
+        static let Marked = "marked"
     }
     
     // 3. We are promoting these four from simple properties, to Core Data attributes
@@ -29,6 +30,8 @@ class Photo : NSManagedObject {
     @NSManaged var imagePath: String
     @NSManaged var id: String
     @NSManaged var pin: Pin?
+    @NSManaged var marked: Bool
+    
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
@@ -38,6 +41,7 @@ class Photo : NSManagedObject {
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         imagePath = dictionary[Keys.ImagePath] as! String
         id = dictionary[Keys.ID] as! String
+        marked = false
         
     }
     func saveImage (image: UIImage, path: String ) -> Bool{

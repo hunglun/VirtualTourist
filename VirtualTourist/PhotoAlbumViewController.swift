@@ -23,15 +23,46 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     var photos = [UIImage]() //UIImage(data: imageData)
     var pin : Pin!
 
+    @IBOutlet var bottomButton: UIButton!
     
     @IBOutlet var collectionView: UICollectionView!
+    var markedIndexPaths = [NSIndexPath]()
+    func getNewPhotoCollection(){
+        print("Get new photo collection")
+    }
+    
+    func deleteMarkedPhotos(){
 
+        for photo in pin.photos {
+            if (photo.marked == true) {
+                sharedContext.deleteObject(photo)
+                photo.pin = nil
+            }
+        }
+        collectionView.deleteItemsAtIndexPaths(markedIndexPaths)
+        markedIndexPaths.removeAll()
+        CoreDataStackManager.sharedInstance().saveContext()
+
+
+    }
+    @IBAction func pressBottomButton(sender: UIButton) {
+        let result = pin.photos.filter { (photo) in photo.marked  == true }
+
+        if result.count == 0 {
+        // New Collection
+            getNewPhotoCollection()
+        }else{
+        // if there is something to be deleted
+            deleteMarkedPhotos()
+        }
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         populateNavigationBar()
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+        bottomButton.titleLabel?.text = "New Collection"
         
         if latitude == nil || longitude == nil    {
             return
@@ -70,22 +101,6 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         if let photoTitle = result["title"] as? String, /* non-fatal */
             imageUrlString = result["url_m"] as? String,
             id = result["id"] as? String{
-                /*
-                
-                var imageData : NSData?
-                //TODO: create image path here.
-                // load the image in CollectionView later.
-                if let localURL = self.loadPhotoFromDisk(id) {
-                    imageData = NSData(contentsOfURL: localURL)
-                    print("found \(localURL.path)")
-                    
-                }else {
-                    
-                    imageData = NSData(contentsOfURL: imageURL)
-                    self.savePhotoToDisk(id ,data: imageData!)
-                }
-                */
-                
                 let photo = Photo(dictionary :[Photo.Keys.ImagePath : imageUrlString, Photo.Keys.ID : id],context: self.sharedContext)
                 photo.pin = self.pin
                 print(photoTitle)
@@ -151,9 +166,29 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     // MARKDOWN : UICollectionView
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("select photo")
-        
+        self.pin.photos[indexPath.row].marked = !self.pin.photos[indexPath.row].marked
+        if (self.pin.photos[indexPath.row].marked) {
+            collectionView.cellForItemAtIndexPath(indexPath)?.alpha = 0.3
+            markedIndexPaths.append(indexPath)
+        }else{
+            collectionView.cellForItemAtIndexPath(indexPath)?.alpha = 1
+//TODO: remove indexPATH
+            //markedIndexPaths.append(indexPath)
+
+        }
+
+        let result = pin.photos.filter { (photo) in photo.marked  == true }
+        if result.count == 0 {
+            bottomButton.titleLabel!.text = "New Photo Collection"
+            print("set new Collection")
+        }else{
+            bottomButton.titleLabel!.text = "Remove Selection"
+            print("remove pictures")
+        }
     }
-    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        print("deselect photo")
+    }
     func collectionView(tableView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(pin?.photos.count)
         if pin?.photos ==  nil {
@@ -161,7 +196,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         }
         return pin!.photos.count
     }
-    
+
     func collectionView(tableView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView?.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCollectionViewCell", forIndexPath: indexPath) as! PhotoAlbumCollectionViewCell
         
