@@ -26,7 +26,8 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     @IBOutlet var bottomButton: UIButton!
     
     @IBOutlet var collectionView: UICollectionView!
-    var markedIndexPaths = [NSIndexPath]()
+    var markedIndexPathDict = [Int:NSIndexPath]()
+    
     func getNewPhotoCollection(){
         print("Get new photo collection")
     }
@@ -39,8 +40,10 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
                 photo.pin = nil
             }
         }
-        collectionView.deleteItemsAtIndexPaths(markedIndexPaths)
-        markedIndexPaths.removeAll()
+
+        collectionView.deleteItemsAtIndexPaths(Array(markedIndexPathDict.values))
+        markedIndexPathDict.removeAll()
+
         CoreDataStackManager.sharedInstance().saveContext()
 
 
@@ -140,8 +143,6 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     func savePhotoToDisk(id: String,data : NSData) {
         let photoFileURL = getPathForPhotoId(id)
         saveImage( UIImage(data: data)!,path: photoFileURL.path!)
-
-        //TODO: save imageData to photoFileURL
     }
 
     func loadPhotoFromDisk(id : String)-> NSURL?{
@@ -169,11 +170,10 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         self.pin.photos[indexPath.row].marked = !self.pin.photos[indexPath.row].marked
         if (self.pin.photos[indexPath.row].marked) {
             collectionView.cellForItemAtIndexPath(indexPath)?.alpha = 0.3
-            markedIndexPaths.append(indexPath)
+            markedIndexPathDict[indexPath.row] = indexPath
         }else{
             collectionView.cellForItemAtIndexPath(indexPath)?.alpha = 1
-//TODO: remove indexPATH
-            //markedIndexPaths.append(indexPath)
+            markedIndexPathDict.removeValueForKey(indexPath.row)
 
         }
 
