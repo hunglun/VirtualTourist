@@ -70,8 +70,9 @@ Sprint 7
 
 
 BUG:
-button reset to original title, when clicked.
-
+1. button reset to original title, when clicked.
+2. keep pressing new collection button --> CoreData Error!
+3. image deletion leads to crash
 21th Feb 2016 Midnight
 
 

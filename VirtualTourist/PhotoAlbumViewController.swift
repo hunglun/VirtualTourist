@@ -85,11 +85,11 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         collectionView.delegate = self
         collectionView.dataSource = self
         bottomButton.titleLabel?.text = "New Collection"
-        page = 0
+        page = 1
         if latitude == nil || longitude == nil    {
             return
         }
-        print("Photos : \(pin?.photos.count)")
+        print("Latitude, Longitude, Photos : \(latitude) ; \(longitude) ; \(pin?.photos.count)")
         if pin?.photos.count ==  nil || pin?.photos.count==0{
             getNewPhotoCollection()
         }
@@ -188,6 +188,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         }
 
         let result = pin.photos.filter { (photo) in photo.marked  == true }
+        print("Marked photo count:\(result.count)")
         if result.count == 0 {
             bottomButton.titleLabel!.text = "New Photo Collection"
             print("set new Collection")
