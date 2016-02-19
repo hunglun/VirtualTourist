@@ -22,7 +22,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     var latitude : Double?
     var photos = [UIImage]() //UIImage(data: imageData)
     var pin : Pin!
-
+    var page : Int?
     @IBOutlet var bottomButton: UIButton!
     
     @IBOutlet var collectionView: UICollectionView!
@@ -30,6 +30,11 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     
     func getNewPhotoCollection(){
         print("Get new photo collection")
+        Flickr.longitude=longitude
+        Flickr.latitude=latitude
+        Flickr.page = page
+        Flickr.sharedInstance().getImageFromFlickrBySearch(downloadCompletionHander);
+
     }
     
     func deleteMarkedPhotos(){
@@ -46,14 +51,27 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         markedIndexPathDict.removeAll()
 
         CoreDataStackManager.sharedInstance().saveContext()
-
-
     }
+
+    func deleteAllPhotos(){
+        
+        for photo in pin.photos {
+            sharedContext.deleteObject(photo)
+            photo.deleteImage()
+            photo.pin = nil
+        }
+        
+        CoreDataStackManager.sharedInstance().saveContext()
+        collectionView.reloadData()
+    }
+
     @IBAction func pressBottomButton(sender: UIButton) {
         let result = pin.photos.filter { (photo) in photo.marked  == true }
 
         if result.count == 0 {
         // New Collection
+            page = page! + 1
+            deleteAllPhotos()
             getNewPhotoCollection()
         }else{
         // if there is something to be deleted
@@ -67,17 +85,15 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         collectionView.delegate = self
         collectionView.dataSource = self
         bottomButton.titleLabel?.text = "New Collection"
-        
+        page = 0
         if latitude == nil || longitude == nil    {
             return
         }
         print("Photos : \(pin?.photos.count)")
         if pin?.photos.count ==  nil || pin?.photos.count==0{
-//            getImageFromFlickrBySearch(methodArguments)
-            Flickr.longitude=longitude
-            Flickr.latitude=latitude
-            Flickr.sharedInstance().getImageFromFlickrBySearch(downloadCompletionHander);
+            getNewPhotoCollection()
         }
+
     }
 
     func populateNavigationBar() {
@@ -133,10 +149,8 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
 
     func saveImage (image: UIImage, path: String ) -> Bool{
         
-//        let pngImageData = UIImagePNGRepresentation(image)
         let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
         let result = jpgImageData!.writeToFile(path, atomically: true)
-        
         return result
         
     }
@@ -156,10 +170,6 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         }
     }
 
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-    }
     
     func backToMapView(){
         navigationController?.popToRootViewControllerAnimated(true)
@@ -175,7 +185,6 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         }else{
             collectionView.cellForItemAtIndexPath(indexPath)?.alpha = 1
             markedIndexPathDict.removeValueForKey(indexPath.row)
-
         }
 
         let result = pin.photos.filter { (photo) in photo.marked  == true }
@@ -204,7 +213,10 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         if let image = self.pin.photos[indexPath.row].getImage(collectionView) {
             cell.imageView?.image = image
             cell.activityIndicator?.hidden = true
+            cell.activityIndicator?.startAnimating()
+            
         }else{
+            cell.activityIndicator?.stopAnimating()
             cell.activityIndicator?.hidden = false
         }
         return cell

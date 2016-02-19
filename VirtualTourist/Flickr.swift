@@ -14,7 +14,7 @@ let _EXTRAS = "url_m"
 let _SAFE_SEARCH = "1"
 let _DATA_FORMAT = "json"
 let _NO_JSON_CALLBACK = "1"
-
+let _PER_PAGE = "21"
 class Flickr : NSObject {
     
     typealias CompletionHander = (result: AnyObject!, error: NSError?) -> Void
@@ -24,6 +24,7 @@ class Flickr : NSObject {
     
     static var longitude : Double!
     static var latitude : Double!
+    static var page : Int!
     
     class func createBoundingBoxString() -> String {
         
@@ -45,7 +46,8 @@ class Flickr : NSObject {
         "safe_search": _SAFE_SEARCH,
         "extras": _EXTRAS,
         "format": _DATA_FORMAT,
-        "nojsoncallback": _NO_JSON_CALLBACK
+        "nojsoncallback": _NO_JSON_CALLBACK,
+        "per_page": _PER_PAGE
     ]
     
    
@@ -186,7 +188,7 @@ class Flickr : NSObject {
 
     /* Function makes first request to get a random page, then it makes a request to get an image with the random page */
     func getImageFromFlickrBySearch(downloadCompletionHandler :CompletionHander) {
-        
+
         let session = NSURLSession.sharedSession()
         self.methodArguments["bbox"] = Flickr.createBoundingBoxString()
         let urlString = _BASE_URL + Flickr.escapedParameters(methodArguments)
@@ -272,9 +274,11 @@ class Flickr : NSObject {
             /* Pick a random page! */
             //            let pageLimit = min(totalPages, 40)
             //            let randomPage = Int(arc4random_uniform(UInt32(pageLimit))) + 1
-            
+
+            let p = Flickr.page % (totalPages + 1)
+            print("Page: \(p)")
             self.getImageFromFlickrBySearchWithPage(self.methodArguments,
-                                                    pageNumber: 1,
+                                                    pageNumber: p,
                                                     completionHandler: downloadCompletionHandler)
             
         }

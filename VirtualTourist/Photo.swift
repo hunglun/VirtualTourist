@@ -62,10 +62,12 @@ class Photo : NSManagedObject {
     }
     func deleteImage(){
         let photoFileURL = getPathForPhotoId(id)
-        do {
-            try NSFileManager.defaultManager().removeItemAtPath(photoFileURL.path!)
-        } catch _ {
-            print("Error removing file \(photoFileURL.path)")
+        if NSFileManager.defaultManager().fileExistsAtPath(photoFileURL.path!) {
+            do {
+                try NSFileManager.defaultManager().removeItemAtPath(photoFileURL.path!)
+            } catch _ {
+                print("Error removing file \(photoFileURL.path)")
+            }
         }
 
     }

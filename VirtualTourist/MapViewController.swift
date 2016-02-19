@@ -157,14 +157,6 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
         }
     }
 
-    override func viewWillAppear(animated: Bool) {
-        
-        
-        super.viewWillAppear(animated)
-        
-        
-        
-    }
 
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
  
@@ -187,9 +179,8 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
     }
 
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-           navigateToPhotoAlbumView(((view.annotation?.title)!)!);
-        print(view.annotation!.title)
-
+        navigateToPhotoAlbumView(((view.annotation?.title)!)!);
+        view.selected = false
     }
     
     func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
@@ -198,17 +189,6 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
     }
 
     
-    func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-
-        if control == annotationView.rightCalloutAccessoryView {
-//            let app = UIApplication.sharedApplication()
-  //          app.openURL(NSURL(string: annotationView.annotation!.subtitle!!)!)
-
-            navigateToPhotoAlbumView(((annotationView.annotation?.title)!)!);
-/*            let photoAlbumViewController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")
-            presentViewController(photoAlbumViewController, animated: true, completion: nil) */
-        }
-    }
 
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         saveMapRegion()
