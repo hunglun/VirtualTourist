@@ -60,7 +60,15 @@ class Photo : NSManagedObject {
         
 
     }
+    func deleteImage(){
+        let photoFileURL = getPathForPhotoId(id)
+        do {
+            try NSFileManager.defaultManager().removeItemAtPath(photoFileURL.path!)
+        } catch _ {
+            print("Error removing file \(photoFileURL.path)")
+        }
 
+    }
     func getPathForPhotoId(id:String) -> NSURL{
         let filename = "\(id).jpg"
         let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]

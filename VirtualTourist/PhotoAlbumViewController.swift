@@ -37,6 +37,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         for photo in pin.photos {
             if (photo.marked == true) {
                 sharedContext.deleteObject(photo)
+                photo.deleteImage()
                 photo.pin = nil
             }
         }
@@ -166,7 +167,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     
     // MARKDOWN : UICollectionView
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("select photo")
+
         self.pin.photos[indexPath.row].marked = !self.pin.photos[indexPath.row].marked
         if (self.pin.photos[indexPath.row].marked) {
             collectionView.cellForItemAtIndexPath(indexPath)?.alpha = 0.3
