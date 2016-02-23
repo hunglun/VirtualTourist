@@ -16,17 +16,6 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
     @IBOutlet weak var mapView: MKMapView!
     var selectedPin : Pin?
     var pins = [Pin]()
-    
-    func edit(){
-        //TODO 0.5 : edit
-    }
-    
-    func populateNavigationBar() {
-        
-//        navigationItem.rightBarButtonItem  = UIBarButtonItem(title: "Edit", style: .Plain, target: self, action: "edit")
-//        navigationItem.title = "On The Map"
-    }
-
  
     func navigateToPhotoAlbumView(pinID : String){
         let nextController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController") as! PhotoAlbumViewController
@@ -89,7 +78,6 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        populateNavigationBar()
         addTapHoldGesture()
         print(NSUserDefaults.standardUserDefaults().floatForKey("myValue"))
         NSUserDefaults.standardUserDefaults().setFloat(22.5, forKey: "myValue")

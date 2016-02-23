@@ -5,18 +5,10 @@
 //  Created by hunglun on 2/2/16.
 //  Copyright © 2016 hunglun. All rights reserved.
 //
-/* 1. Import Core Data
- * 2. Make Person a subclass of NSManagedObject
- * 3. Add @NSManaged in front of each of the properties/attributes
- * 4. Include the standard Core Data init method, which inserts the object into a context
- * 5. Write an init method that takes a dictionary and a context. This the biggest chagne to the class
- */
- 
- // 1. Import CoreData
+
 import CoreData
 import MapKit
 
-// 2. Make Person a subclass of NSManagedObject
 class Photo : NSManagedObject {
     
     struct Keys {
@@ -25,7 +17,6 @@ class Photo : NSManagedObject {
         static let Marked = "marked"
     }
     
-    // 3. We are promoting these four from simple properties, to Core Data attributes
     
     @NSManaged var imagePath: String
     @NSManaged var id: String
@@ -46,10 +37,8 @@ class Photo : NSManagedObject {
     }
     func saveImage (image: UIImage, path: String ) -> Bool{
         
-        //        let pngImageData = UIImagePNGRepresentation(image)
         let jpgImageData = UIImageJPEGRepresentation(image, 1.0)   // if you want to save as JPEG
         let result = jpgImageData!.writeToFile(path, atomically: true)
-        
         return result
         
     }
@@ -96,15 +85,12 @@ class Photo : NSManagedObject {
                 
             }else {
                 dispatch_async(dispatch_get_main_queue(), {
-                    //                    self.setUIEnabled(enabled: true)
                     imageData = NSData(contentsOfURL: NSURL(string: self.imagePath)!)
                     self.savePhotoToDisk(self.id ,data: imageData!)
-                    // call collectionView.reloadData()
                 })
             }
             
 
-            //        return TheMovieDB.Caches.imageCache.imageWithIdentifier(imagePath)
             if let data = NSData(contentsOfURL:  getPathForPhotoId(id)){
                 return UIImage(data: data)
             }
@@ -113,30 +99,23 @@ class Photo : NSManagedObject {
         }
         
         set {
-            //      TheMovieDB.Caches.imageCache.storeImage(image, withIdentifier: imagePath!)
         }
     }
     
     func getImage(collectionView : UICollectionView)-> UIImage? {
         var imageData : NSData?
-        //TODO: use Memory cache to speed up photo lookup
-        // reference ImageCache.swift 
         if let localURL = self.loadPhotoFromDisk(id) {
             imageData = NSData(contentsOfURL: localURL)
             print("Found \(localURL.path)")
             
         }else {
             dispatch_async(dispatch_get_main_queue(), {
-                //                    self.setUIEnabled(enabled: true)
                 imageData = NSData(contentsOfURL: NSURL(string: self.imagePath)!)
                 self.savePhotoToDisk(self.id ,data: imageData!)
                 print("Downloaded \(self.imagePath)")
                 collectionView.reloadData()
             })
         }
-        
-        
-        //        return TheMovieDB.Caches.imageCache.imageWithIdentifier(imagePath)
         if let data = NSData(contentsOfURL:  getPathForPhotoId(id)){
             return UIImage(data: data)
            

@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Photo Album-->
@@ -21,30 +20,30 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RW2-vM-0YL">
                                 <rect key="frame" x="0.0" y="64" width="600" height="472"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2of-3V-JAg">
-                                    <size key="itemSize" width="293" height="208"/>
+                                    <size key="itemSize" width="431" height="413"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoAlbumCollectionViewCell" id="bCy-2U-JLW" customClass="PhotoAlbumCollectionViewCell" customModule="VirtualTourist" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="293" height="208"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" reuseIdentifier="PhotoAlbumCollectionViewCell" id="bCy-2U-JLW" customClass="PhotoAlbumCollectionViewCell" customModule="VirtualTourist" customModuleProvider="target">
+                                        <rect key="frame" x="85" y="64" width="431" height="413"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="293" height="208"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="431" height="413"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="bBH-vp-5Un">
-                                                    <rect key="frame" x="0.0" y="0.0" width="295" height="208"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="431" height="413"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="bBH-vp-5Un" secondAttribute="bottom" id="DIg-dh-OtC"/>
-                                            <constraint firstItem="bBH-vp-5Un" firstAttribute="top" secondItem="bCy-2U-JLW" secondAttribute="top" id="YUF-RL-Pf3"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="bBH-vp-5Un" secondAttribute="trailing" constant="-10" id="YXB-N7-1A9"/>
-                                            <constraint firstItem="bBH-vp-5Un" firstAttribute="leading" secondItem="bCy-2U-JLW" secondAttribute="leading" id="m6H-fn-5j7"/>
+                                            <constraint firstItem="bBH-vp-5Un" firstAttribute="top" secondItem="bCy-2U-JLW" secondAttribute="top" id="Oiz-w1-q7C"/>
+                                            <constraint firstItem="bBH-vp-5Un" firstAttribute="leading" secondItem="bCy-2U-JLW" secondAttribute="leading" id="aPb-h0-wcj"/>
+                                            <constraint firstAttribute="bottom" secondItem="bBH-vp-5Un" secondAttribute="bottom" id="h0u-4H-k3l"/>
+                                            <constraint firstAttribute="trailing" secondItem="bBH-vp-5Un" secondAttribute="trailing" id="s1I-bM-CLB"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="bBH-vp-5Un" id="2W8-eB-f0d"/>
@@ -69,13 +68,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="top" secondItem="mk4-vf-5sg" secondAttribute="bottom" id="0rd-Ls-Y3j"/>
-                            <constraint firstAttribute="trailing" secondItem="RW2-vM-0YL" secondAttribute="trailing" id="4X4-BR-Zdp"/>
-                            <constraint firstItem="d0w-Dv-ZSn" firstAttribute="trailing" secondItem="RW2-vM-0YL" secondAttribute="trailing" id="6SQ-m9-Ke6"/>
-                            <constraint firstItem="d0w-Dv-ZSn" firstAttribute="leading" secondItem="RW2-vM-0YL" secondAttribute="leading" id="Cpn-gy-ol9"/>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="9o1-rH-cLa" secondAttribute="leading" id="Ggq-0I-lVR"/>
-                            <constraint firstItem="d0w-Dv-ZSn" firstAttribute="bottom" secondItem="9if-R1-31B" secondAttribute="top" id="W7C-YD-gYu"/>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="centerY" secondItem="9o1-rH-cLa" secondAttribute="centerY" id="q1V-1j-uAE"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="top" secondItem="mk4-vf-5sg" secondAttribute="bottom" id="8xa-hy-LmJ"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="9o1-rH-cLa" secondAttribute="leading" id="BzL-wU-3uh"/>
+                            <constraint firstAttribute="trailing" secondItem="RW2-vM-0YL" secondAttribute="trailing" id="QNS-zv-w7d"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="centerY" secondItem="9o1-rH-cLa" secondAttribute="centerY" id="THV-qD-krZ"/>
+                            <constraint firstItem="d0w-Dv-ZSn" firstAttribute="bottom" secondItem="9if-R1-31B" secondAttribute="top" id="eiX-db-0Qq"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="trailing" secondItem="d0w-Dv-ZSn" secondAttribute="trailing" id="iSs-oK-f4L"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="d0w-Dv-ZSn" secondAttribute="leading" id="y3e-Jk-UxI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Photo Album" id="LGA-aB-CyR">
