@@ -23,11 +23,14 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     var photos = [UIImage]() //UIImage(data: imageData)
     var pin : Pin!
     var page : Int?
-    @IBOutlet var bottomButton: UIButton!
     
+    @IBOutlet var bottomButton: UIBarButtonItem!
     @IBOutlet var collectionView: UICollectionView!
     var markedIndexPathDict = [Int:NSIndexPath]()
     
+    @IBAction func bottomButtonPressed(sender: UIBarButtonItem) {
+        photoAlbumBottomButtonAction()
+    }
     func getNewPhotoCollection(){
         print("Get new photo collection")
         Flickr.longitude=longitude
@@ -65,7 +68,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         collectionView.reloadData()
     }
 
-    @IBAction func pressBottomButton(sender: UIButton) {
+    func photoAlbumBottomButtonAction() {
         let result = pin.photos.filter { (photo) in photo.marked  == true }
 
         if result.count == 0 {
@@ -76,7 +79,9 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         }else{
         // if there is something to be deleted
             deleteMarkedPhotos()
+            bottomButton.title = "New Photo Collection"
         }
+        
         
     }
     override func viewDidLoad() {
@@ -84,7 +89,6 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         populateNavigationBar()
         collectionView.delegate = self
         collectionView.dataSource = self
-        bottomButton.titleLabel?.text = "New Collection"
         page = 1
         if latitude == nil || longitude == nil    {
             return
@@ -190,10 +194,10 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         let result = pin.photos.filter { (photo) in photo.marked  == true }
         print("Marked photo count:\(result.count)")
         if result.count == 0 {
-            bottomButton.titleLabel!.text = "New Photo Collection"
+            bottomButton.title = "New Photo Collection"
             print("set new Collection")
         }else{
-            bottomButton.titleLabel!.text = "Remove Selection"
+            bottomButton.title = "Remove Selection"
             print("remove pictures")
         }
     }
@@ -213,12 +217,9 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         
         if let image = self.pin.photos[indexPath.row].getImage(collectionView) {
             cell.imageView?.image = image
-            cell.activityIndicator?.hidden = true
-            cell.activityIndicator?.startAnimating()
             
         }else{
-            cell.activityIndicator?.stopAnimating()
-            cell.activityIndicator?.hidden = false
+            cell.imageView?.image = UIImage(named: "photoPlaceholder")
         }
         return cell
     }

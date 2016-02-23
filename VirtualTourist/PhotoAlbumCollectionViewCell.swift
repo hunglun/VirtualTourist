@@ -10,7 +10,5 @@ import UIKit
 
 class PhotoAlbumCollectionViewCell : UICollectionViewCell {
     
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    
     @IBOutlet var imageView: UIImageView!
 }

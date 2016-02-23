@@ -68,12 +68,17 @@ Sprint 7
 [2] When a photo is removed from an album, or when an entire album is deleted, the PhotoAlbumViewController explicitly deletes the underlying file(s) in the Documents directory.[DONE]
 [3] The Photo Album view has a button that initiates the download of a new album, replacing the images in the photo album with a new set from  Flickr.[DONE]
 
-
-BUG:
-1. button reset to original title, when clicked.
-2. keep pressing new collection button --> CoreData Error!
-3. image deletion leads to crash
 21th Feb 2016 Midnight
+
+DEBUG:
+1. button reset to original title, when clicked. 30min -> 10min [DONE]
+2. keep pressing new collection button --> CoreData Error! 2 hours! [Unable to reproduce]
+3. image deletion leads to crash --> 2 hours [unable reproduce]
+4. activity controller not working properly - Delete! 15min [DONE]
+5. New Collection Button -> There is no placeholder image. 30min -> 10min [DONE]
+
+
+26th Feb 2016 Midnight
 
 
 BackLog:

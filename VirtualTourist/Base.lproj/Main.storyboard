@@ -18,13 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rVa-cn-Xrs">
-                                <rect key="frame" x="0.0" y="544" width="594" height="56"/>
-                                <state key="normal" title="New Photo Collection"/>
-                                <connections>
-                                    <action selector="pressBottomButton:" destination="YUg-ef-aNN" eventType="touchUpInside" id="EN4-mh-CvR"/>
-                                </connections>
-                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RW2-vM-0YL">
                                 <rect key="frame" x="0.0" y="64" width="600" height="472"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2of-3V-JAg">
@@ -35,15 +28,12 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoAlbumCollectionViewCell" id="bCy-2U-JLW" customClass="PhotoAlbumCollectionViewCell" customModule="VirtualTourist" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="293" height="208"/>
+                                        <rect key="frame" x="0.0" y="64" width="293" height="208"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="293" height="208"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="qZl-ix-VJl">
-                                                    <rect key="frame" x="136" y="94" width="20" height="20"/>
-                                                </activityIndicatorView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="bBH-vp-5Un">
                                                     <rect key="frame" x="0.0" y="0.0" width="295" height="208"/>
                                                 </imageView>
@@ -54,12 +44,9 @@
                                             <constraint firstAttribute="bottom" secondItem="bBH-vp-5Un" secondAttribute="bottom" id="DIg-dh-OtC"/>
                                             <constraint firstItem="bBH-vp-5Un" firstAttribute="top" secondItem="bCy-2U-JLW" secondAttribute="top" id="YUF-RL-Pf3"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="bBH-vp-5Un" secondAttribute="trailing" constant="-10" id="YXB-N7-1A9"/>
-                                            <constraint firstItem="qZl-ix-VJl" firstAttribute="centerY" secondItem="bBH-vp-5Un" secondAttribute="centerY" id="bDQ-mf-1Pr"/>
                                             <constraint firstItem="bBH-vp-5Un" firstAttribute="leading" secondItem="bCy-2U-JLW" secondAttribute="leading" id="m6H-fn-5j7"/>
-                                            <constraint firstItem="qZl-ix-VJl" firstAttribute="centerX" secondItem="bCy-2U-JLW" secondAttribute="centerX" id="wGC-wL-XxL"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="activityIndicator" destination="qZl-ix-VJl" id="mff-Gi-b5t"/>
                                             <outlet property="imageView" destination="bBH-vp-5Un" id="2W8-eB-f0d"/>
                                         </connections>
                                     </collectionViewCell>
@@ -69,24 +56,33 @@
                                     <outlet property="delegate" destination="YUg-ef-aNN" id="NiA-96-xag"/>
                                 </connections>
                             </collectionView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0w-Dv-ZSn">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="New Photo Collection" id="WGP-cN-qI3">
+                                        <connections>
+                                            <action selector="bottomButtonPressed:" destination="YUg-ef-aNN" id="Bn6-0e-aEh"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="RW2-vM-0YL" firstAttribute="top" secondItem="mk4-vf-5sg" secondAttribute="bottom" id="0rd-Ls-Y3j"/>
-                            <constraint firstItem="rVa-cn-Xrs" firstAttribute="top" secondItem="RW2-vM-0YL" secondAttribute="bottom" constant="8" symbolic="YES" id="1HU-Mo-aCQ"/>
                             <constraint firstAttribute="trailing" secondItem="RW2-vM-0YL" secondAttribute="trailing" id="4X4-BR-Zdp"/>
-                            <constraint firstItem="rVa-cn-Xrs" firstAttribute="bottom" secondItem="9if-R1-31B" secondAttribute="top" id="CMb-QP-qhg"/>
+                            <constraint firstItem="d0w-Dv-ZSn" firstAttribute="trailing" secondItem="RW2-vM-0YL" secondAttribute="trailing" id="6SQ-m9-Ke6"/>
+                            <constraint firstItem="d0w-Dv-ZSn" firstAttribute="leading" secondItem="RW2-vM-0YL" secondAttribute="leading" id="Cpn-gy-ol9"/>
                             <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="9o1-rH-cLa" secondAttribute="leading" id="Ggq-0I-lVR"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="rVa-cn-Xrs" secondAttribute="trailing" constant="-14" id="PN3-hd-U40"/>
+                            <constraint firstItem="d0w-Dv-ZSn" firstAttribute="bottom" secondItem="9if-R1-31B" secondAttribute="top" id="W7C-YD-gYu"/>
                             <constraint firstItem="RW2-vM-0YL" firstAttribute="centerY" secondItem="9o1-rH-cLa" secondAttribute="centerY" id="q1V-1j-uAE"/>
-                            <constraint firstItem="rVa-cn-Xrs" firstAttribute="leading" secondItem="RW2-vM-0YL" secondAttribute="leading" id="zMT-XD-cp4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Photo Album" id="LGA-aB-CyR">
                         <barButtonItem key="backBarButtonItem" title="Back" id="3ws-lq-bjT"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="bottomButton" destination="rVa-cn-Xrs" id="VEM-Ex-y4b"/>
+                        <outlet property="bottomButton" destination="WGP-cN-qI3" id="BBU-Lk-7Ti"/>
                         <outlet property="collectionView" destination="RW2-vM-0YL" id="ste-b0-BR6"/>
                     </connections>
                 </viewController>
