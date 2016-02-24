@@ -23,7 +23,7 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     var photos = [UIImage]() //UIImage(data: imageData)
     var pin : Pin!
     var page : Int?
-    
+    @IBOutlet var flowLayout : UICollectionViewFlowLayout!
     @IBOutlet var bottomButton: UIBarButtonItem!
     @IBOutlet var collectionView: UICollectionView!
     var markedIndexPathDict = [Int:NSIndexPath]()
@@ -86,6 +86,19 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let space: CGFloat = 3.0
+        
+        let shorterSide = ( self.view.frame.size.width < self.view.frame.size.height ) ? self.view.frame.size.width : self.view.frame.size.height
+        let longerSide  = ( self.view.frame.size.width > self.view.frame.size.height ) ? self.view.frame.size.width : self.view.frame.size.height
+        
+        let width = (shorterSide - (2 * space)) / 3.0
+        let height = (longerSide - (2 * space)) / 4.0
+        
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.itemSize = CGSizeMake(width, height)
+        
+        
         populateNavigationBar()
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -125,13 +138,14 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
         if let photoTitle = result["title"] as? String, /* non-fatal */
             imageUrlString = result["url_m"] as? String,
             id = result["id"] as? String{
-                let photo = Photo(dictionary :[Photo.Keys.ImagePath : imageUrlString, Photo.Keys.ID : id],context: self.sharedContext)
-                photo.pin = self.pin
-                print(photoTitle)
-                CoreDataStackManager.sharedInstance().saveContext()
-                print(photo.pin?.photos.count)
-                
                 dispatch_async(dispatch_get_main_queue(), {
+
+                    let photo = Photo(dictionary :[Photo.Keys.ImagePath : imageUrlString, Photo.Keys.ID : id],context: self.sharedContext)
+                    photo.pin = self.pin
+                    print(photoTitle)
+                    CoreDataStackManager.sharedInstance().saveContext()
+                    print(photo.pin?.photos.count)
+                    
                     self.collectionView.reloadData()
                 })
                 
@@ -214,13 +228,13 @@ class PhotoAlbumViewController : UIViewController , UICollectionViewDelegate, UI
 
     func collectionView(tableView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView?.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCollectionViewCell", forIndexPath: indexPath) as! PhotoAlbumCollectionViewCell
-        
+
         if let image = self.pin.photos[indexPath.row].getImage(collectionView) {
-            cell.imageView?.image = image
-            
+            cell.imageView!.image = image
         }else{
-            cell.imageView?.image = UIImage(named: "photoPlaceholder")
+            cell.imageView!.image = UIImage(named: "photoPlaceholder")
         }
+        
         return cell
     }
     

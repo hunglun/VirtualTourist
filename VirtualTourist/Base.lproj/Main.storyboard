@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RW2-vM-0YL">
-                                <rect key="frame" x="0.0" y="64" width="600" height="472"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2of-3V-JAg">
                                     <size key="itemSize" width="431" height="413"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -68,13 +68,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="top" secondItem="mk4-vf-5sg" secondAttribute="bottom" id="8xa-hy-LmJ"/>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="9o1-rH-cLa" secondAttribute="leading" id="BzL-wU-3uh"/>
-                            <constraint firstAttribute="trailing" secondItem="RW2-vM-0YL" secondAttribute="trailing" id="QNS-zv-w7d"/>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="centerY" secondItem="9o1-rH-cLa" secondAttribute="centerY" id="THV-qD-krZ"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="trailing" secondItem="d0w-Dv-ZSn" secondAttribute="trailing" id="3FQ-2d-ucI"/>
+                            <constraint firstAttribute="trailing" secondItem="RW2-vM-0YL" secondAttribute="trailing" id="Bm6-wB-97f"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="d0w-Dv-ZSn" secondAttribute="leading" id="EoR-BK-H4L"/>
+                            <constraint firstItem="d0w-Dv-ZSn" firstAttribute="top" secondItem="RW2-vM-0YL" secondAttribute="bottom" constant="20" id="OW6-zI-6rC"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="top" secondItem="9o1-rH-cLa" secondAttribute="top" id="Umz-Ym-jZA"/>
                             <constraint firstItem="d0w-Dv-ZSn" firstAttribute="bottom" secondItem="9if-R1-31B" secondAttribute="top" id="eiX-db-0Qq"/>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="trailing" secondItem="d0w-Dv-ZSn" secondAttribute="trailing" id="iSs-oK-f4L"/>
-                            <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="d0w-Dv-ZSn" secondAttribute="leading" id="y3e-Jk-UxI"/>
+                            <constraint firstItem="RW2-vM-0YL" firstAttribute="leading" secondItem="9o1-rH-cLa" secondAttribute="leading" id="qPO-Kl-5Ty"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Photo Album" id="LGA-aB-CyR">
@@ -83,6 +83,7 @@
                     <connections>
                         <outlet property="bottomButton" destination="WGP-cN-qI3" id="BBU-Lk-7Ti"/>
                         <outlet property="collectionView" destination="RW2-vM-0YL" id="ste-b0-BR6"/>
+                        <outlet property="flowLayout" destination="2of-3V-JAg" id="vAO-Qy-e7o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rdP-Sh-XtG" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -84,9 +84,7 @@ class Flickr : NSObject {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                dispatch_async(dispatch_get_main_queue(), {
-                    //                    self.setUIEnabled(enabled: true)
-                })
+               
                 print("There was an error with your request: \(error)")
                 return
             }

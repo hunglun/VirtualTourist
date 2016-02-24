@@ -168,13 +168,9 @@ class  MapViewController: UIViewController,MKMapViewDelegate,UIGestureRecognizer
 
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         navigateToPhotoAlbumView(((view.annotation?.title)!)!);
-        view.selected = false
+        mapView.deselectAnnotation(view.annotation, animated: true)
     }
     
-    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
-
-        print("\(view.annotation!.title) deselect")
-    }
 
     
 

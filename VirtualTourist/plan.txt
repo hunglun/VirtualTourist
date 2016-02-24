@@ -70,7 +70,7 @@ Sprint 7
 
 21th Feb 2016 Midnight
 
-DEBUG:
+DEBUG: [DONE]
 1. button reset to original title, when clicked. 30min -> 10min [DONE]
 2. keep pressing new collection button --> CoreData Error! 2 hours! [Unable to reproduce]
 3. image deletion leads to crash --> 2 hours [unable reproduce]
@@ -80,10 +80,14 @@ DEBUG:
 
 26th Feb 2016 Midnight
 
+First Code Review Issues[DONE]
+1. The app does contain a managed object context backed by a local SQLite store but the implementation of the Core Data access code is not thread safe. [30min -> 5min]DONE
+2. Only one image is shown each time. It fits the whole screen. We are unable to witness images display as they are downloaded. [30min -> 10min] DONE
+3. Because of the fact that the downloading of the image files is performed in the main queue, the app freezes while downloading. [30min ->60min] DONE
 
-BackLog:
-(1) review rubrik
-DWD8qNfjiy
+24th Feb 2016 Midnight
+
+
 
 
 

@@ -22,7 +22,7 @@ class Photo : NSManagedObject {
     @NSManaged var id: String
     @NSManaged var pin: Pin?
     @NSManaged var marked: Bool
-    
+    @NSManaged var downloadInProgress: Bool
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
@@ -33,6 +33,7 @@ class Photo : NSManagedObject {
         imagePath = dictionary[Keys.ImagePath] as! String
         id = dictionary[Keys.ID] as! String
         marked = false
+        downloadInProgress = false
         
     }
     func saveImage (image: UIImage, path: String ) -> Bool{
@@ -76,51 +77,34 @@ class Photo : NSManagedObject {
             return nil
         }
     }
-    var image: UIImage? {
-        get {
-            var imageData : NSData?
-            if let localURL = self.loadPhotoFromDisk(id) {
-                imageData = NSData(contentsOfURL: localURL)
-                print("found \(localURL.path)")
-                
-            }else {
-                dispatch_async(dispatch_get_main_queue(), {
-                    imageData = NSData(contentsOfURL: NSURL(string: self.imagePath)!)
-                    self.savePhotoToDisk(self.id ,data: imageData!)
-                })
-            }
-            
-
-            if let data = NSData(contentsOfURL:  getPathForPhotoId(id)){
-                return UIImage(data: data)
-            }
-            print("can't find file \(imagePath)")
-            return nil
-        }
-        
-        set {
-        }
-    }
+ 
     
     func getImage(collectionView : UICollectionView)-> UIImage? {
-        var imageData : NSData?
-        if let localURL = self.loadPhotoFromDisk(id) {
-            imageData = NSData(contentsOfURL: localURL)
-            print("Found \(localURL.path)")
-            
-        }else {
-            dispatch_async(dispatch_get_main_queue(), {
-                imageData = NSData(contentsOfURL: NSURL(string: self.imagePath)!)
-                self.savePhotoToDisk(self.id ,data: imageData!)
-                print("Downloaded \(self.imagePath)")
-                collectionView.reloadData()
-            })
-        }
         if let data = NSData(contentsOfURL:  getPathForPhotoId(id)){
+
             return UIImage(data: data)
-           
+            
+        }else{
+            if downloadInProgress == false {
+                let session = NSURLSession.sharedSession()
+                let url = NSURL(string: self.imagePath)!
+                let request = NSURLRequest(URL: url)
+                
+                let task = session.dataTaskWithRequest(request) { (data, response, error) in
+                    guard let data = data else {
+                        print("No data was returned by the request!")
+                        return
+                    }
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.savePhotoToDisk(self.id ,data: data)
+                        print("Downloaded \(self.imagePath)")
+                        collectionView.reloadData()
+                    })
+                }
+                task.resume()
+                downloadInProgress = true
+            }
         }
-        print("Pending \(imagePath)")
         return nil
     }
 }
